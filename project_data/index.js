@@ -56,7 +56,7 @@ app.post('/updateData', (req, res) => {
     // update existing nodes
 
 
-    
+
     // validate new database against schema
     const valid = validateDatabase(xmlDocDatabase)
     if (!valid) {
