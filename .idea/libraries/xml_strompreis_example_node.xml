@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="xml-strompreis-example-node">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/archive/xml-strompreis-example-node.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -11,11 +11,12 @@ function loadXMLDoc(filename) {
 
 async function createPdf() {
     // xsl transformation
-    let xml = loadXMLDoc('../fo.xml')
-    let xsl = loadXMLDoc('../feature-03/fo.xsl')
+    let xml = loadXMLDoc('../fo.xml') // load xml file, change file name in own project
+    let xsl = loadXMLDoc('../feature-03/fo.xsl') // load xsl file, change file name in own project
+    /* XSLT Transformation*/
     xsltProcessor = new XSLTProcessor();
     xsltProcessor.importStylesheet(xsl);
-    resultDocument = xsltProcessor.transformToFragment(xml, document);
+    resultDocument = xsltProcessor.transformToFragment(xml, document); // different in video "transformToDocument"
 
     const serializer = new XMLSerializer();
     const document_fragment_string = serializer.serializeToString(resultDocument);
@@ -23,8 +24,10 @@ async function createPdf() {
     // send transformed xml (fo) to backend for api request
     const response = await fetch('/convertToPdf', {
         method: 'POST',
-        body: document_fragment_string
+        body: document_fragment_string // different in video "foToDocumentString"
     })
+
+    /* returns rendered PDF */
     // if request ok -> download pdf-file
     if (response.status === 200) {
         const buffer = await response.arrayBuffer();

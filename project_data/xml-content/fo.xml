@@ -1,4 +1,4 @@
 <?xml version="1.0" ?>
+<!-- first phase of FO, XSL transformation-->
 <?xml-stylesheet type="text/xsl" href="feature-03/fo.xsl"?>
-
 <fo></fo>

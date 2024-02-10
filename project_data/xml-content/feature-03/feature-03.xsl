@@ -29,10 +29,13 @@
                             </i>
                         </p>
                         <p>
+                            <!-- Phase 1, XML->FO file creation -->
                             <a href="fo.xml" target="_blank">create FO</a>
                             <small>(directly in browser with XSTL)</small>
                         </p>
                         <p>
+                            <!-- Phase 2, FO->PDF file creation -->
+                            <!-- call fo-functions.js function createPDF() -->
                             <a href="#" onclick="createPdf()">create PDF</a>
                             <small>(create FO and render as PDF via web service)</small>
                         </p>
@@ -42,6 +45,7 @@
 
                 </div>
                 <!-- Javascript-Functions for FO-Transformation -->
+                <!-- provide js functionality in browser -->
                 <script src="feature-03/fo-functions.js" type="text/javascript"></script>
             </body>
         </html>
