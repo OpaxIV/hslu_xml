@@ -32,7 +32,7 @@ app.post('/convertToPdf', async (req, res) => {
     res.sendFile(path.resolve('temp.pdf')) // send temporary pdf to client (link)
 })
 
-// feature 4: forum submition for adding more items to db
+// feature 4: forum submission for adding more items to db
 app.post('/updateData', (req, res) => {
     const dataToUpdate = req.body // obj containing our data (feature-03.xsl)
     // read database xml
