@@ -9,6 +9,7 @@ function loadXMLDoc(filename) {
     return xhttp.responseXML;
 }
 
+<!-- Important: the FO to PDF feature won't work when being disconnected from the hslu network -->
 async function createPdf() {
     // xsl transformation
     let xml = loadXMLDoc('../fo.xml') // load xml file, change file name in own project
