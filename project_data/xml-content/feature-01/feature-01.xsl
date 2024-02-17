@@ -12,7 +12,6 @@
             </head>
             <body>
 
-
                 <!-- title and nav  -->
                 <h1>Feature #01</h1>
                 <small>
@@ -20,20 +19,24 @@
                 </small>
 
                 <div class="content">
+                    <h2>Choose between the powerplants you want to receive the data</h2>
 
-                    <p>
-                        <i>Let's access some data</i>
-                    </p>
-
-
-                    <!-- load data from DB and render  -->
+                    <!-- dropdown for powerplants  -->
+                    <form>
                     <div>
-                        <h2>our energie plants:</h2>
+                        <label for="plant-input">Power plant</label>
+                        <select name="plant" id="plant-input">
                         <xsl:apply-templates
-                                select="document('../database/database.xml')/energie-data/energie-plant"
-                        >
+                                select="document('../database/database.xml')/energie-data/energie-plant/plant">
                         </xsl:apply-templates>
-                    </div>
+                    </select>
+                </div>
+            </form>
+
+                    <!-- TBC content of the powerplants  -->
+
+
+
                 </div>
 
             </body>
@@ -44,6 +47,11 @@
         <li>
             <xsl:value-of select="name"/>
         </li>
+    </xsl:template>
+
+    <!-- Name of the powerplant  -->
+    <xsl:template match="plant">
+        <option><xsl:value-of select="name"/></option>
     </xsl:template>
 
 </xsl:stylesheet>
