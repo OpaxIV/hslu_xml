@@ -43,9 +43,8 @@
         <fo:block font-size="16pt" color="black" font-weight="900">
             <xsl:value-of select="name"/>
         </fo:block>
-        <xsl:variable name="border" select="'1pt solid black'"/> <!-- used for table border-->
-        <fo:table space-after.optimum="20pt" width="13cm" margin="2mm" font-size="11pt" border="{$border}"> <!-- border around the table -->
-            <fo:table-column column-number="1" column-width="30%" border="{$border}"/>
+        <fo:table space-after.optimum="20pt" width="13cm" margin="2mm" font-size="11pt"> <!-- border around the table -->
+            <fo:table-column column-number="1" column-width="30%"/>
             <fo:table-column column-number="2" column-width="30%"/>
             <fo:table-body>
                 <xsl:apply-templates select="statistics/price"/>
@@ -55,15 +54,25 @@
 
     <xsl:template match="price">
         <fo:table-row>
-            <fo:table-cell>
+            <xsl:variable name="border" select="'1pt solid black'"/> <!-- used for table cell border-->
+            <fo:table-cell border="{$border}">
                 <fo:block font-size="12pt" color="black" font-weight="900" text-align="center" margin="1mm">
                     <xsl:value-of select="@date"/> <!-- get price attribute "date" -->
                 </fo:block>
             </fo:table-cell>
-            <fo:table-cell>
-                <fo:block font-size="12pt" color="black" text-align="center" margin="1mm">
-                    <xsl:value-of select="text()"/> CHF <!-- get text from price, append "CHF" -->
-                </fo:block>
+            <fo:table-cell border="{$border}">
+                <fo:choose> <!-- select cheapest prices and mark them green -->
+                    <fo:when test="number(text()) &lt; 9.00">
+                        <fo:block font-size="12pt" color="green" text-align="center" margin="1mm">
+                            <xsl:value-of select="text()"/> CHF <!-- get text from price, append "CHF" -->
+                        </fo:block>
+                    </fo:when>
+                    <fo:otherwise>
+                        <fo:block font-size="12pt" color="black" text-align="center" margin="1mm">
+                            <xsl:value-of select="text()"/> CHF <!-- get text from price, append "CHF" -->
+                        </fo:block>
+                    </fo:otherwise>
+                </fo:choose>
             </fo:table-cell>
         </fo:table-row>
     </xsl:template>
