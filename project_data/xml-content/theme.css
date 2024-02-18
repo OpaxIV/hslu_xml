@@ -20,8 +20,6 @@ body {
 .banner{
     background-image: url(img/banner.png); /* banner image for title */          /* does not work*/
     /*background-color: lightgreen;*/
-    width: auto;
-    height: auto;
     background-size: cover;
     background-repeat: no-repeat;
 }

@@ -9,11 +9,14 @@ function loadXMLDoc(filename) {
     return xhttp.responseXML;
 }
 
+<!-- feature 3-->
+
 <!-- Important: the FO to PDF feature won't work when being disconnected from the hslu network -->
 async function createPdf() {
     // xsl transformation
     let xml = loadXMLDoc('../fo.xml') // load xml file, change file name in own project
     let xsl = loadXMLDoc('../feature-03/fo.xsl') // load xsl file, change file name in own project
+
     /* XSLT Transformation*/
     xsltProcessor = new XSLTProcessor();
     xsltProcessor.importStylesheet(xsl);
@@ -35,7 +38,7 @@ async function createPdf() {
         const blob = new Blob([buffer], { type: 'application/pdf' });
         const link = document.getElementById('dummyLink')
         link.href = window.URL.createObjectURL(blob);
-        link.download = "mypdfDocument.pdf";
+        link.download = "Preisstatistik_Energiewerke.pdf";
         link.click()
     }
 }
