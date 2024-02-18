@@ -33,11 +33,11 @@
                         </div>
                     </form>
 
-                    <!-- TBC content of the powerplants  -->
+                    <!-- TBC content of the power plants  -->
                     <button type="button" onclick="loadPlant()">Submit</button>
-                    <br></br>
-                    <br></br>
-                    <table id="plantInformation"></table>
+                    <br/>
+                    <br/>
+                    <table id="plantInformation"/>
                 </div>
 
                 <script>
@@ -80,7 +80,7 @@
         </html>
     </xsl:template>
 
-    <!-- Name of the powerplant  -->
+    <!-- Name of the power plant  -->
     <xsl:template match="plant">
         <option>
             <xsl:attribute name="value">
