@@ -23,35 +23,73 @@
 
                     <!-- dropdown for powerplants  -->
                     <form>
-                    <div>
-                        <label for="plant-input">Power plant</label>
-                        <select name="plant" id="plant-input">
-                        <xsl:apply-templates
-                                select="document('../database/database.xml')/energie-data/energie-plant/plant">
-                        </xsl:apply-templates>
-                    </select>
-                </div>
-            </form>
+                        <div>
+                            <label for="plant-input">Power plant</label>
+                            <select name="plant" id="plant-input">
+                                <xsl:apply-templates
+                                        select="document('../database/database.xml')/energie-data/energie-plant/plant">
+                                </xsl:apply-templates>
+                            </select>
+                        </div>
+                    </form>
 
                     <!-- TBC content of the powerplants  -->
-
-
-
+                    <button type="button" onclick="loadPlant()">Submit</button>
+                    <br></br>
+                    <div id="output"></div>
                 </div>
 
+                <script>
+                    <![CDATA[
+                    function loadPlant() { //Capture the selected plant name
+                        var xmlHttp = new XMLHttpRequest();
+                        var plantName = document.getElementById('plant-input').value;
+                        //var plantName = "Aarau"; // TODO richtige plant auswählen
+                        xmlHttp.onreadystatechange = function () {
+                            if (this.readyState == 4 && this.status == 200) {
+                                myFunction(this, plantName); // Pass the plant name to myFunction
+                                console.log("Button working");
+                            }
+                        };
+                        xmlHttp.open("GET", "../database/database.xml", true);
+                        xmlHttp.send();
+                    }
+
+                    //TODO xml Datei und plant name werden mitgegeben
+                    function myFunction(xml, plantName) {
+                        var xmlDoc = xml.responseXML;
+                        var table = "<tr><th>Date</th><th>Price</th></tr>";
+                        var plants = xmlDoc.getElementsByTagName("plant");
+
+                        for (var i = 0; i < plants.length; i++) {
+                            var name = plants[i].getElementsByTagName("name")[0].childNodes[0].nodeValue;
+
+                            if (name === plantName) { //check if this is the plant
+                                var prices = plants[i].getElementsByTagName("price");
+
+                                for(var j = 0; j < prices.length; j++) {
+                                    var date = prices[j].getAttribute("date") //Get date Attribute
+                                    var price = prices[j].childNodes[0].nodeValue; //Get price value
+                                    table += "<tr><td>" + date + "</td><td>" + price + "</td></tr>"; // Add table row
+                                }
+                            }
+                        }
+                        document.getElementById("demo").innerHTML = table;
+                    }
+                    ]]>
+                </script>
             </body>
         </html>
     </xsl:template>
 
-    <xsl:template match="plant">
-        <li>
-            <xsl:value-of select="name"/>
-        </li>
-    </xsl:template>
-
     <!-- Name of the powerplant  -->
     <xsl:template match="plant">
-        <option><xsl:value-of select="name"/></option>
+        <option>
+            <xsl:attribute name="value">
+                <xsl:value-of select="name"/>
+            </xsl:attribute>
+            <xsl:value-of select="name"/>
+        </option>
     </xsl:template>
 
 </xsl:stylesheet>
