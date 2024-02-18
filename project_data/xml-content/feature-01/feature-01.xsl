@@ -36,7 +36,7 @@
                     <!-- TBC content of the powerplants  -->
                     <button type="button" onclick="loadPlant()">Submit</button>
                     <br></br>
-                    <div id="output"></div>
+                    <table id="demo"></table>
                 </div>
 
                 <script>
@@ -44,7 +44,6 @@
                     function loadPlant() { //Capture the selected plant name
                         var xmlHttp = new XMLHttpRequest();
                         var plantName = document.getElementById('plant-input').value;
-                        //var plantName = "Aarau"; // TODO richtige plant auswählen
                         xmlHttp.onreadystatechange = function () {
                             if (this.readyState == 4 && this.status == 200) {
                                 myFunction(this, plantName); // Pass the plant name to myFunction
