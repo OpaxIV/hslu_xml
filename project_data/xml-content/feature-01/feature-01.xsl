@@ -19,9 +19,9 @@
                 </small>
 
                 <div class="content">
-                    <h2>Choose between the powerplants you want to receive the data</h2>
+                    <h2>Choose between the power plants you want to receive the data</h2>
 
-                    <!-- dropdown for powerplants  -->
+                    <!-- dropdown for power plants  -->
                     <form>
                         <div>
                             <label for="plant-input">Power plant</label>
@@ -36,7 +36,8 @@
                     <!-- TBC content of the powerplants  -->
                     <button type="button" onclick="loadPlant()">Submit</button>
                     <br></br>
-                    <table id="demo"></table>
+                    <br></br>
+                    <table id="plantInformation"></table>
                 </div>
 
                 <script>
@@ -46,16 +47,14 @@
                         var plantName = document.getElementById('plant-input').value;
                         xmlHttp.onreadystatechange = function () {
                             if (this.readyState == 4 && this.status == 200) {
-                                myFunction(this, plantName); // Pass the plant name to myFunction
-                                console.log("Button working");
+                                createPlantTable(this, plantName);
                             }
                         };
                         xmlHttp.open("GET", "../database/database.xml", true);
                         xmlHttp.send();
                     }
 
-                    //TODO xml Datei und plant name werden mitgegeben
-                    function myFunction(xml, plantName) {
+                    function createPlantTable(xml, plantName) {
                         var xmlDoc = xml.responseXML;
                         var table = "<tr><th>Date</th><th>Price</th></tr>";
                         var plants = xmlDoc.getElementsByTagName("plant");
@@ -73,7 +72,7 @@
                                 }
                             }
                         }
-                        document.getElementById("demo").innerHTML = table;
+                        document.getElementById("plantInformation").innerHTML = table;
                     }
                     ]]>
                 </script>
