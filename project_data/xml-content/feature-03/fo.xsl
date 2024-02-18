@@ -25,12 +25,11 @@
                               padding-bottom="5pt">Energiewerke Mittelland
                     </fo:block>
                     <fo:block font-size="15pt" font-family="sans-serif" line-height="19pt" space-after.optimum="20pt"
-                              background-color="black" color="white" text-align="center" padding-top="5pt"
-                              padding-bottom="5pt">Price Stats
+                              background-color="green" color="white" text-align="center" padding-top="5pt"
+                              padding-bottom="5pt">Price Statistics
                     </fo:block>
                     <xsl:apply-templates
-                            select="document('../database/database.xml')/energie-data/energie-plant/plant"
-                    >
+                            select="document('../database/database.xml')/energie-data/energie-plant/plant">
 
                     </xsl:apply-templates>
                 </fo:flow>
@@ -40,10 +39,11 @@
 
     <!-- applied templates when creating pdf-->
     <xsl:template match="plant">
-        <fo:block font-size="16pt" color="black" font-weight="900">
-            <xsl:value-of select="name"/>
+        <fo:block font-size="16pt" color="black" font-weight="900" text-align="center">
+            <xsl:value-of select="name"/>   <!-- name/location of the plant-->
         </fo:block>
-        <fo:table space-after.optimum="20pt" width="13cm" margin="2mm" font-size="11pt"> <!-- border around the table -->
+        <fo:table space-after.optimum="20pt" width="13cm" margin="2mm"
+                  font-size="11pt"> <!-- border around the table -->
             <fo:table-column column-number="1" column-width="30%"/>
             <fo:table-column column-number="2" column-width="30%"/>
             <fo:table-body>
@@ -61,18 +61,18 @@
                 </fo:block>
             </fo:table-cell>
             <fo:table-cell border="{$border}">
-                <fo:choose> <!-- select cheapest prices and mark them green -->
-                    <fo:when test="number(text()) &lt; 9.00">
+                <xsl:choose> <!-- select cheapest prices and mark them green for easier recognition -->
+                    <xsl:when test="text() &lt; 9">
                         <fo:block font-size="12pt" color="green" text-align="center" margin="1mm">
                             <xsl:value-of select="text()"/> CHF <!-- get text from price, append "CHF" -->
                         </fo:block>
-                    </fo:when>
-                    <fo:otherwise>
+                    </xsl:when>
+                    <xsl:otherwise>
                         <fo:block font-size="12pt" color="black" text-align="center" margin="1mm">
                             <xsl:value-of select="text()"/> CHF <!-- get text from price, append "CHF" -->
                         </fo:block>
-                    </fo:otherwise>
-                </fo:choose>
+                    </xsl:otherwise>
+                </xsl:choose>
             </fo:table-cell>
         </fo:table-row>
     </xsl:template>

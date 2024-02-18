@@ -12,8 +12,11 @@
             </head>
             <body>
 
-                <!-- title and nav  -->
-                <h1>Energiewerke Mittelland Reloaded</h1>
+                <div class="banner">
+                    <!-- title and nav  -->
+                    <h1>Energiewerke Mittelland Reloaded</h1>
+
+                </div>
 
                 <div class="content">
 

@@ -4,7 +4,7 @@ body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #212529;
+    color: #212529;             /* very dark (mostly black) blue, used as fallback */
     font-weight: 400;
     font-size: 14px;
     line-height: 1.42857143;
@@ -12,9 +12,18 @@ body {
 
     margin: 0;
     padding: 25px;
-    background-color: #445d6e;
-    color: #8f9ea8;
+    background-color: #445d6e; /* background of whole page*/
+    color: #8f9ea8;            /* color of title */
 
+}
+
+.banner{
+    background-image: url(img/banner.png); /* banner image for title */          /* does not work*/
+    /*background-color: lightgreen;*/
+    width: auto;
+    height: auto;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 a {
