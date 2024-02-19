@@ -46,6 +46,7 @@
                   font-size="11pt"> <!-- border around the table -->
             <fo:table-column column-number="1" column-width="30%"/>
             <fo:table-column column-number="2" column-width="30%"/>
+            <fo:table-column column-number="3" column-width="30%"/>     <!-- check if it works-->
             <fo:table-body>
                 <xsl:apply-templates select="statistics/price"/>
             </fo:table-body>
@@ -70,6 +71,20 @@
                     <xsl:otherwise>
                         <fo:block font-size="12pt" color="black" text-align="center" margin="1mm">
                             <xsl:value-of select="text()"/> CHF <!-- get text from price, append "CHF" -->
+                        </fo:block>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </fo:table-cell>
+            <fo:table-cell>
+                <xsl:choose> <!-- select name of the city and display corresponding picture -->
+                    <xsl:when test="//plant/name[text() = 'Aarau']">
+                        <fo:block text-align="center" margin="1mm">
+                            <fo:img src="../img/Aarau.png" alt="Aarau" width="500" height="600"/>
+                        </fo:block>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <fo:block text-align="center" margin="1mm">
+                            <fo:value-of select="text()"/>  <!-- get text from price, append "CHF" -->
                         </fo:block>
                     </xsl:otherwise>
                 </xsl:choose>
