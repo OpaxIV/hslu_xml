@@ -21,7 +21,7 @@
                 <div class="content">
 
                     <p>
-                        <i>Welcome...</i>
+                        <i>Wilkommen auf unserer Webseite</i>
                     </p>
 
                     <!-- render menu nav  -->
