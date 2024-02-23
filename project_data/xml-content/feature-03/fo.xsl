@@ -79,12 +79,12 @@
                 <xsl:choose> <!-- select name of the city and display corresponding picture -->
                     <xsl:when test="//plant/name[text() = 'Aarau']">
                         <fo:block text-align="center" margin="1mm">
-                            <fo:img src="../img/Aarau.png" alt="Aarau" width="500" height="600"/>
+                            <fo:external-graphic src="url('../img/Aarau.png')" content-width="500px" content-height="600px" scaling="uniform"/>
                         </fo:block>
                     </xsl:when>
                     <xsl:otherwise>
                         <fo:block text-align="center" margin="1mm">
-                            <fo:value-of select="text()"/>  <!-- get text from price, append "CHF" -->
+                            <fo:value-of select="text()"/>  <!-- get text from price, append "CHF" -->  <!-- change it to something more ideal-->
                         </fo:block>
                     </xsl:otherwise>
                 </xsl:choose>
