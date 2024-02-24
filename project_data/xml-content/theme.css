@@ -13,11 +13,19 @@ body {
     color: #333; /* updated title color */
 }
 
+
+
 .banner {
-    background-image: url(img/banner.png);
-    background-size: cover;
-    background-repeat: no-repeat;
-    height: 200px; /* added height for the banner */
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    height: 5%;
+
+}
+
+.banner img {
+    max-width: 100%;
+    height: auto;
 }
 
 a {

@@ -7,14 +7,15 @@
     <xsl:template match="menu">
         <html>
             <head>
-                <title>Energiewerke Mittelland</title>
+                <title>Energiewerkepreisvergleich</title>
                 <link rel="stylesheet" type="text/css" href="theme.css"/>
             </head>
             <body>
 
                 <div class="banner">
                     <!-- title and nav  -->
-                    <h1>Energiewerke Mittelland Reloaded</h1>
+                    <h1>Energiewerkepreisvergleich</h1>
+                    <img src="img/banner.png" alt="Banner Image" />
 
                 </div>
 
@@ -55,4 +56,4 @@
         </li>
     </xsl:template>
 
-</xsl:stylesheet>
+    </xsl:stylesheet>
