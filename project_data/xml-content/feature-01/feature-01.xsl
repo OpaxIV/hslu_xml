@@ -48,6 +48,8 @@
                         xmlHttp.onreadystatechange = function () {
                             if (this.readyState == 4 && this.status == 200) {
                                 createPlantTable(this, plantName);
+                                // TODO not working yet displaying wappen
+                                displayWappen(plantName);
                             }
                         };
                         xmlHttp.open("GET", "../database/database.xml", true);
@@ -65,7 +67,7 @@
                             if (name === plantName) { //check if this is the plant
                                 var prices = plants[i].getElementsByTagName("price");
 
-                                for(var j = 0; j < prices.length; j++) {
+                                for (var j = 0; j < prices.length; j++) {
                                     var date = prices[j].getAttribute("date") //Get date Attribute
                                     var price = prices[j].childNodes[0].nodeValue; //Get price value
                                     table += "<tr><td>" + date + "</td><td>" + price + "</td></tr>"; // Add table row
@@ -73,6 +75,16 @@
                             }
                         }
                         document.getElementById("plantInformation").innerHTML = table;
+                    }
+
+                    // TODO not working yet displaying wappen, for each kanton in the list different logo
+                    function displayWappen(plantName) {
+                        var plantName = document.getElementById('plant-input').value;
+                        var img = document.createElement("img")
+                        img.src = '../img/Aarau.png';
+                        img.width = 500;
+                        img.height = 600;
+                        document.body.appendChild(img);
                     }
                     ]]>
                 </script>
