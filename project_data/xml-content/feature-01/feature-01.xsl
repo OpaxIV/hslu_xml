@@ -3,43 +3,60 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml">
     <xsl:output doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"
                 doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"/>
-
+    
     <xsl:template match="feature">
         <html>
             <head>
-                <title>Energiewerke Mittelland Reloaded</title>
+                <title>Energiewerkepreisvergleich</title>
+                <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
                 <link rel="stylesheet" type="text/css" href="theme.css"/>
             </head>
             <body>
-
-                <!-- title and nav  -->
-                <h1>Feature #01</h1>
-                <small>
-                    <a href="index.xml">Home</a>
-                </small>
-
-                <div class="content">
-                    <h2>Choose between the power plants you want to receive the data</h2>
-
-                    <!-- dropdown for power plants  -->
-                    <form>
-                        <div>
-                            <label for="plant-input">Power plant</label>
-                            <select name="plant" id="plant-input">
-                                <xsl:apply-templates
-                                        select="document('../database/database.xml')/energie-data/energie-plant/plant">
-                                </xsl:apply-templates>
-                            </select>
+                <div class="flex-container">
+                    <div class="w3-container">
+                        <!-- title and nav  -->
+                        <div class="w3-container w3-teal w3-cell w3-mobile">
+                            <h1>Energiepreise nach Standort</h1>
                         </div>
-                    </form>
-
-                    <!-- TBC content of the power plants  -->
-                    <button type="button" onclick="loadPlant()">Submit</button>
-                    <br/>
-                    <br/>
-                    <table id="plantInformation"/>
+                        <div class="w3-card">
+                            
+                            <img src="img/banner.png" alt="Banner Image" />
+                            <small>
+                                <a href="index.xml">Home</a>
+                            </small>
+                        </div>
+                    </div>
+                    
+                    <div class="w3-container">
+                        <div class="w3-container w3-teal">
+                            <h2>Für welches Energiewerk möchten Sie die Preise anzeigen lassen?</h2>
+                        </div>
+                        <div class= "w3-container">
+                            <!-- dropdown for power plants  -->
+                            <form class="w3-container">
+                                <div class="w3-container">
+                                    
+                                    <label for="plant-input" >Power plant</label>
+                                    <select name="plant" id="plant-input" class="w3-input">
+                                        <!-- Namen der einzelnen Plants als Select-Optionen (siehe template-match unten) -->
+                                        <xsl:apply-templates
+                                            select="document('../database/database.xml')/energie-data/energie-plant/plant"><!-- XML-Dokument auf das das Template bezogen wird, festlegen -->
+                                        </xsl:apply-templates>
+                                    </select>
+                                    
+                                </div>
+                            </form>
+                        </div>
+                        
+                        
+                        <!-- TBC content of the power plants  -->
+                        <button type="button" class="w3-button w3-teal" onclick="loadPlant()">Submit</button>
+                        <br/>
+                        <br/>
+                        <table id="plantInformation"/>
+                    </div>
                 </div>
-
+                
                 <script>
                     <![CDATA[
                     function loadPlant() { //Capture the selected plant name
@@ -52,11 +69,12 @@
                                 displayWappen(plantName);
                             }
                         };
-                        xmlHttp.open("GET", "../database/database.xml", true);
+                        xmlHttp.open("GET", "../database/database.xml", false);
                         xmlHttp.send();
                     }
 
-                    function createPlantTable(xml, plantName) {
+                    <!-- alte Version der Funktion ohne xsl -->
+                    function createPlantTableOld(xml, plantName) {
                         var xmlDoc = xml.responseXML;
                         var table = "<tr><th>Date</th><th>Price</th></tr>";
                         var plants = xmlDoc.getElementsByTagName("plant");
@@ -77,22 +95,79 @@
                         document.getElementById("plantInformation").innerHTML = table;
                     }
 
-                    // TODO not working yet displaying wappen, for each kanton in the list different logo
+                    <!-- neue Funktion mit xsl -->
+                    function createPlantTable(xml, plantName) {
+                        var xmlDoc = xml.responseXML;
+                        var xsltDoc = new DOMParser().parseFromString(`
+                            <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                                <!-- declare xsl variable "plantName" -->
+                                <xsl:variable name="plantName" select="'` + plantName + `'"/>
+                                <xsl:template match="/">
+                                
+                                    <div class="w3-container">
+                                        <table>
+                                            <xsl:apply-templates select="document('../database/database.xml')/energie-data/energie-plant/plant[name=$plantName]"/>
+                                            
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Price</th>
+                                            </tr>
+                                            <!-- template auf jeden der Preise anwenden, um neue Zeile zu erstellen -->
+                                            <!-- <xsl:apply-templates select="//plant[name=$plantName]/statistics/price"/> -->
+                                            <xsl:apply-templates select="document('../database/database.xml')/energie-data/energie-plant/plant[name=$plantName]/statistics/price"/>
+                                            
+                                        </table>
+
+                                    </div>
+
+                                    
+                                </xsl:template>
+
+                                <xsl:template match="plant">
+                                    <tr> 
+                                        <!-- add the image located in img/{name}.png -->
+                                        <img src="img/{name}.png" class="Wappen" alt="{name}" />
+                                    </tr>
+                                </xsl:template>
+
+                                <xsl:template match="price">
+                                    <tr>
+                                        <td>
+                                            <xsl:value-of select="@date"/>
+                                        </td>
+                                        <td>
+                                            <xsl:value-of select="."/>
+                                        </td>
+                                    </tr>
+                                </xsl:template>
+                            </xsl:stylesheet>
+                        `, "text/xml");
+
+                        var xsltProcessor = new XSLTProcessor();
+                        xsltProcessor.importStylesheet(xsltDoc);
+
+                        var resultDoc = xsltProcessor.transformToDocument(xmlDoc);
+                        var resultHtml = new XMLSerializer().serializeToString(resultDoc);
+
+                        document.getElementById("plantInformation").innerHTML = resultHtml;
+                    }
+
                     function displayWappen(plantName) {
-                        var plantName = document.getElementById('plant-input').value;
-                        var img = document.createElement("img")
-                        img.src = '../img/Aarau.png';
-                        img.width = 500;
-                        img.height = 600;
-                        document.body.appendChild(img);
+                        console.log("displayWappen-Funktion aufgerufen")
+                        var wappen = document.createElement('img');
+                        wappen.src = 'img/' + plantName + '.png';
+                        wappen.width = 500;
+                        wappen.height = 600;
+                        console.log(document.getElementById("plantInformation"))
+                        document.getElementById("plantInformation").appendChild(img);
                     }
                     ]]>
                 </script>
             </body>
         </html>
     </xsl:template>
-
-    <!-- Name of the power plant  -->
+    
+    <!-- Name of the power plant für Select-Optionen -->
     <xsl:template match="plant">
         <option>
             <xsl:attribute name="value">
@@ -101,5 +176,6 @@
             <xsl:value-of select="name"/>
         </option>
     </xsl:template>
-
+    
+    
 </xsl:stylesheet>
