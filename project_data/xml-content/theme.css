@@ -14,15 +14,14 @@ body {
 
 
 
-.banner {
-    background-color: #c32929; /* updated background color */
+/* .banner {
     margin: 25px;
     padding: 25px;
     display: inline-block;
     justify-content: center;
     align-items: center;
     height: 20vh;
-}
+} */
 
 .banner img {
     max-width: 100%;

@@ -9,63 +9,64 @@
             <head>
                 <title>Energiewerkepreisvergleich</title>
                 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
-                <link rel="stylesheet" type="text/css" href="theme.css"/>
+                <!-- <link rel="stylesheet" type="text/css" href="theme.css"/> -->
+                <style>
+                    /* Additional CSS to adjust layout */
+                    .w3-half {
+                    width: 50%;
+                    float: left;
+                    }
+                    .w3-row::after {
+                    content: "";
+                    clear: both;
+                    display: table;
+                    }
+                </style>
             </head>
             <body>
-                <div class="flex-container">
-                    <div class="w3-container">
-                        <!-- title and nav  -->
-                        <div class="w3-container w3-teal w3-cell w3-mobile">
-                            <h1>Energiepreise nach Standort</h1>
-                        </div>
-                        <div class="w3-card">
-                            
-                            <img src="img/banner.png" alt="Banner Image" />
-                            <small>
-                                <a href="index.xml">Home</a>
-                            </small>
-                        </div>
-                    </div>
-                    
-                    <div class="w3-container">
-                        <div class="w3-container w3-teal">
+                <!-- Header -->
+                <header class="w3-container w3-teal">
+                    <h1>Energiepreise nach Standort</h1>
+                    <small>
+                        <a href="index.xml">Home</a>
+                    </small>
+                </header>
+                <!-- Main content -->
+                <div class="w3-container">
+                    <div class="w3-row">
+                        <!-- Left half -->
+                        <div class="w3-half">
                             <h2>Für welches Energiewerk möchten Sie die Preise anzeigen lassen?</h2>
-                        </div>
-                        <div class= "w3-container">
-                            <!-- dropdown for power plants  -->
                             <form class="w3-container">
                                 <div class="w3-container">
-                                    
-                                    <label for="plant-input" >Power plant</label>
+                                    <label for="plant-input">Power plant</label>
                                     <select name="plant" id="plant-input" class="w3-input">
-                                        <!-- Namen der einzelnen Plants als Select-Optionen (siehe template-match unten) -->
-                                        <xsl:apply-templates
-                                            select="document('../database/database.xml')/energie-data/energie-plant/plant"><!-- XML-Dokument auf das das Template bezogen wird, festlegen -->
-                                        </xsl:apply-templates>
+                                        <xsl:apply-templates select="document('../database/database.xml')/energie-data/energie-plant/plant"/>
                                     </select>
-                                    
                                 </div>
                             </form>
+                            <button type="button" class="w3-button w3-teal" onclick="loadPlant()">Submit</button>
+                            <br/>
+                            <br/>
+                            <table id="plantInformation" class="w3-table-all"></table> <!-- Close table tag properly -->
                         </div>
-                        
-                        
-                        <!-- TBC content of the power plants  -->
-                        <button type="button" class="w3-button w3-teal" onclick="loadPlant()">Submit</button>
-                        <br/>
-                        <br/>
-                        <table id="plantInformation"/>
+                        <!-- Right half -->
+                        <div class="w3-container w3-half">
+                            <div style="width: 100%; height: 100%;">
+                                <img src="img/banner.png" alt="Banner Image" style="max-width: 100%; max-height: 100%;" />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 
                 <script>
                     <![CDATA[
-                    function loadPlant() { //Capture the selected plant name
+                    function loadPlant() {
                         var xmlHttp = new XMLHttpRequest();
                         var plantName = document.getElementById('plant-input').value;
                         xmlHttp.onreadystatechange = function () {
                             if (this.readyState == 4 && this.status == 200) {
                                 createPlantTable(this, plantName);
-                                // TODO not working yet displaying wappen
                                 displayWappen(plantName);
                             }
                         };
@@ -73,61 +74,31 @@
                         xmlHttp.send();
                     }
 
-                    <!-- alte Version der Funktion ohne xsl -->
-                    function createPlantTableOld(xml, plantName) {
-                        var xmlDoc = xml.responseXML;
-                        var table = "<tr><th>Date</th><th>Price</th></tr>";
-                        var plants = xmlDoc.getElementsByTagName("plant");
-
-                        for (var i = 0; i < plants.length; i++) {
-                            var name = plants[i].getElementsByTagName("name")[0].childNodes[0].nodeValue;
-
-                            if (name === plantName) { //check if this is the plant
-                                var prices = plants[i].getElementsByTagName("price");
-
-                                for (var j = 0; j < prices.length; j++) {
-                                    var date = prices[j].getAttribute("date") //Get date Attribute
-                                    var price = prices[j].childNodes[0].nodeValue; //Get price value
-                                    table += "<tr><td>" + date + "</td><td>" + price + "</td></tr>"; // Add table row
-                                }
-                            }
-                        }
-                        document.getElementById("plantInformation").innerHTML = table;
-                    }
-
-                    <!-- neue Funktion mit xsl -->
                     function createPlantTable(xml, plantName) {
                         var xmlDoc = xml.responseXML;
                         var xsltDoc = new DOMParser().parseFromString(`
                             <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-                                <!-- declare xsl variable "plantName" -->
                                 <xsl:variable name="plantName" select="'` + plantName + `'"/>
                                 <xsl:template match="/">
-                                
                                     <div class="w3-container">
-                                        <table>
-                                            <xsl:apply-templates select="document('../database/database.xml')/energie-data/energie-plant/plant[name=$plantName]"/>
+                                        <div class="w3-container" id="WappenContainer">
+                                            <xsl:apply-templates select="document('../database/database.xml')/energie-data/energie-plant/plant[name=$plantName]/wappen-link"/>
+                                        </div>
+                                        
+                                        <table class="w3-table-all">
                                             
                                             <tr>
                                                 <th>Date</th>
                                                 <th>Price</th>
                                             </tr>
-                                            <!-- template auf jeden der Preise anwenden, um neue Zeile zu erstellen -->
-                                            <!-- <xsl:apply-templates select="//plant[name=$plantName]/statistics/price"/> -->
                                             <xsl:apply-templates select="document('../database/database.xml')/energie-data/energie-plant/plant[name=$plantName]/statistics/price"/>
-                                            
+                                        
                                         </table>
-
                                     </div>
-
-                                    
                                 </xsl:template>
 
-                                <xsl:template match="plant">
-                                    <tr> 
-                                        <!-- add the image located in img/{name}.png -->
-                                        <img src="img/{name}.png" class="Wappen" alt="{name}" />
-                                    </tr>
+                                <xsl:template match="wappen-link">
+                                    <img src="{.}" class="w3-container" alt="Wappen von {../name}" style="max-width: 50%; max-height: 50%;" />
                                 </xsl:template>
 
                                 <xsl:template match="price">
