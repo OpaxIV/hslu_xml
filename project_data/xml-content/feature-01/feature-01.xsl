@@ -27,15 +27,15 @@
                 <!-- Header -->
                 <header class="w3-container w3-teal">
                     <h1>Energiepreise nach Standort</h1>
-                    <small>
+                    <p>
                         <a href="index.xml">Home</a>
-                    </small>
+                    </p>
                 </header>
                 <!-- Main content -->
                 <div class="w3-container">
                     <div class="w3-row">
                         <!-- Left half -->
-                        <div class="w3-half">
+                        <div class="w3-third">
                             <h2>Für welches Energiewerk möchten Sie die Preise anzeigen lassen?</h2>
                             <form class="w3-container">
                                 <div class="w3-container">
@@ -81,7 +81,7 @@
                                 <xsl:variable name="plantName" select="'` + plantName + `'"/>
                                 <xsl:template match="/">
                                     <div class="w3-container">
-                                        <div class="w3-container" id="WappenContainer">
+                                        <div class="w3-container w3-half" id="WappenContainer">
                                             <xsl:apply-templates select="document('../database/database.xml')/energie-data/energie-plant/plant[name=$plantName]/wappen-link"/>
                                         </div>
                                         
