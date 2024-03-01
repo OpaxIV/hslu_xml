@@ -7,21 +7,21 @@ body {
     font-size: 14px;
     line-height: 1.42857143;
     overflow: auto;
-    margin: 0;
+    margin: 10px;
     padding: 25px;
     background-color: #f2f2f2; /* updated background color */
-    color: #333; /* updated title color */
 }
 
 
 
-.banner {
+/* .banner {
+    margin: 25px;
+    padding: 25px;
     display: inline-block;
     justify-content: center;
     align-items: center;
-    height: 5%;
-
-}
+    height: 20vh;
+} */
 
 .banner img {
     max-width: 100%;

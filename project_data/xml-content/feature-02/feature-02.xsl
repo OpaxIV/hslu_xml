@@ -68,6 +68,7 @@
         <xsl:variable name="x-offset" select="(position() * 50)"/>
         <xsl:variable name="y-offset" select="$baseline"/>
         <xsl:variable name="y" select="$y-offset - text()*8"/>
+        
 
         <!-- bar -->
         <svg:path>

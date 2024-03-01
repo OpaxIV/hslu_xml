@@ -3,6 +3,9 @@
     <energie-plant>
         <plant>
             <name>Aarau</name>
+            <wappen-link>
+                img/Aarau.png
+            </wappen-link>
             <statistics>
                 <price date="2021-01-15">10.25</price>
                 <price date="2022-01-17">9.75</price>
@@ -13,6 +16,9 @@
         </plant>
         <plant>
             <name>Luzern</name>
+            <wappen-link>
+                img/Luzern.png
+            </wappen-link>
             <statistics>
                 <price date="2021-01-15">10.00</price>
                 <price date="2022-01-17">8.75</price>
@@ -23,6 +29,9 @@
         </plant>
         <plant>
             <name>Bern</name>
+            <wappen-link>
+                img/Bern.png
+            </wappen-link>
             <statistics>
                 <price date="2021-01-15">11.25</price>
                 <price date="2022-01-17">8.75</price>
@@ -33,6 +42,9 @@
         </plant>
         <plant>
             <name>Zürich</name>
+            <wappen-link>
+                img/Zürich.png
+            </wappen-link>
             <statistics>
                 <price date="2021-01-15">10.25</price>
                 <price date="2022-01-17">9.75</price>
@@ -43,6 +55,9 @@
         </plant>
         <plant>
             <name>Genf</name>
+            <wappen-link>
+                img/Genf.png
+            </wappen-link>
             <statistics>
                 <price date="2021-01-15">10.25</price>
                 <price date="2022-01-17">9.75</price>

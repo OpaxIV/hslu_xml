@@ -3,49 +3,65 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml">
     <xsl:output doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"
                 doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"/>
-
+    
     <xsl:template match="feature">
         <html>
             <head>
-                <title>Energiewerke Mittelland Reloaded</title>
-                <link rel="stylesheet" type="text/css" href="theme.css"/>
+                <title>Energiewerkepreisvergleich</title>
+                <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+                <!-- <link rel="stylesheet" type="text/css" href="theme.css"/> -->
+                <style>
+                    /* Additional CSS to adjust layout */
+                    .w3-half {
+                    width: 50%;
+                    float: left;
+                    }
+                    .w3-row::after {
+                    content: "";
+                    clear: both;
+                    display: table;
+                    }
+                </style>
             </head>
             <body>
-
-                <!-- title and nav  -->
-                <h1>Feature #01</h1>
-                <small>
-                    <a href="index.xml">Home</a>
-                </small>
-
-                <div class="content">
-                    <h2>Choose between the power plants you want to receive the data</h2>
-
-                    <!-- dropdown for power plants  -->
-                    <form>
-                        <div>
-                            <label for="plant-input">Power plant</label>
-                            <select name="plant" id="plant-input">
-                                <!-- XPath abfrage im Dokument -->
-                                <xsl:apply-templates
-                                        select="document('../database/database.xml')/energie-data/energie-plant/plant">
-                                </xsl:apply-templates>
-                            </select>
+                <!-- Header -->
+                <header class="w3-container w3-teal">
+                    <h1>Energiepreise nach Standort</h1>
+                    <p>
+                        <a href="index.xml">Home</a>
+                    </p>
+                </header>
+                <!-- Main content -->
+                <div class="w3-container">
+                    <div class="w3-row">
+                        <!-- Left half -->
+                        <div class="w3-third">
+                            <h2>Für welches Energiewerk möchten Sie die Preise anzeigen lassen?</h2>
+                            <form class="w3-container">
+                                <div class="w3-container">
+                                    <label for="plant-input">Power plant</label>
+                                    <select name="plant" id="plant-input" class="w3-input">
+                                        <xsl:apply-templates select="document('../database/database.xml')/energie-data/energie-plant/plant"/>
+                                    </select>
+                                </div>
+                            </form>
+                            <button type="button" class="w3-button w3-teal" onclick="loadPlant()">Submit</button>
+                            <br/>
+                            <br/>
+                            <table id="plantInformation" class="w3-table-all"></table> <!-- Close table tag properly -->
                         </div>
-                    </form>
-
-                    <!-- TBC content of the power plants  -->
-                    <button type="button" onclick="loadPlant()">Submit</button>
-                    <br/>
-                    <br/>
-                    <table id="plantInformation"/>
-                    <!-- test eintrag-->
-                    <label id="test" />
+                        <!-- Right half -->
+                        <div class="w3-container w3-half">
+                            <div style="width: 100%; height: 100%;">
+                                <img src="img/banner.png" alt="Banner Image" style="max-width: 100%; max-height: 100%;" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
+                
                 <script>
                     <![CDATA[
-                    function loadPlant() { //Capture the selected plant name
+                    function loadPlant() {
                         var xmlHttp = new XMLHttpRequest();
                         var plantName = document.getElementById('plant-input').value;
                         xmlHttp.onreadystatechange = function () {
@@ -53,45 +69,67 @@
                                 createPlantTable(this, plantName);
                             }
                         };
-                        xmlHttp.open("GET", "../database/database.xml", true);
+                        xmlHttp.open("GET", "../database/database.xml", false);
                         xmlHttp.send();
                     }
 
                     function createPlantTable(xml, plantName) {
                         var xmlDoc = xml.responseXML;
-                        var table = "<tr><th>Date</th><th>Price</th></tr>";
-                        var xpath = "/energie-data/energie-plant/plant[name='" + plantName + "']/price";
-                        var prices = xmlDoc.evaluate(xpath, xmlDoc, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
-                        var price = prices.iterateNext();
+                        var xsltDoc = new DOMParser().parseFromString(`
+                            <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+                                <xsl:variable name="plantName" select="'` + plantName + `'"/>
+                                <xsl:template match="/">
+                                    <div class="w3-container">
+                                        <div class="w3-container w3-half" id="WappenContainer">
+                                            <xsl:apply-templates select="document('../database/database.xml')/energie-data/energie-plant/plant[name=$plantName]/wappen-link"/>
+                                        </div>
+                                        
+                                        <table class="w3-table-all">
+                                            
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Price</th>
+                                            </tr>
+                                            <xsl:apply-templates select="document('../database/database.xml')/energie-data/energie-plant/plant[name=$plantName]/statistics/price"/>
+                                        
+                                        </table>
+                                    </div>
+                                </xsl:template>
 
-                        while (price) {
-                            var date = price.getAttribute("date"); // Hole das 'date'-Attribut
-                            var priceValue = price.textContent; // Hole den Textinhalt, der den Preis darstellt
-                            table += "<tr><td>" + date + "</td><td>" + priceValue + "</td></tr>";
-                            price = prices.iterateNext();
-                        }
+                                <xsl:template match="wappen-link">
+                                    <img src="{.}" class="w3-container" alt="Wappen von {../name}" style="max-width: 50%; max-height: 50%;" />
+                                </xsl:template>
 
-                        // Aktualisieren Sie die Tabelle im DOM
-                        document.getElementById("plantInformation").innerHTML = table;
-                        document.getElementById("test").innerHTML = price;
+                                <xsl:template match="price">
+                                    <tr>
+                                        <td>
+                                            <xsl:value-of select="@date"/>
+                                        </td>
+                                        <td>
+                                            <xsl:value-of select="."/>
+                                        </td>
+                                    </tr>
+                                </xsl:template>
+                            </xsl:stylesheet>
+                        `, "text/xml");
+
+                        var xsltProcessor = new XSLTProcessor();
+                        xsltProcessor.importStylesheet(xsltDoc);
+
+                        var resultDoc = xsltProcessor.transformToDocument(xmlDoc);
+                        var resultHtml = new XMLSerializer().serializeToString(resultDoc);
+
+                        document.getElementById("plantInformation").innerHTML = resultHtml;
                     }
 
-                    //TODO not working yet displaying wappen, for each kanton in the list different logo
-                    function displayWappen(plantName) {
-                        var plantName = document.getElementById('plant-input').value;
-                        var img = document.createElement("img")
-                        img.src = '../img/Aarau.png';
-                        img.width = 500;
-                        img.height = 600;
-                        document.body.appendChild(img);
-                    }
+
                     ]]>
                 </script>
             </body>
         </html>
     </xsl:template>
-
-    <!-- Name of the power plant  -->
+    
+    <!-- Name of the power plant für Select-Optionen -->
     <xsl:template match="plant">
         <option>
             <xsl:attribute name="value">
@@ -100,5 +138,6 @@
             <xsl:value-of select="name"/>
         </option>
     </xsl:template>
-
+    
+    
 </xsl:stylesheet>

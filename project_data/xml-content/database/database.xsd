@@ -20,10 +20,13 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="name" type="xs:string"/>
+                <xs:element ref="wappen-link"/>
                 <xs:element ref="statistics"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+
+    <xs:element name="wappen-link" type="xs:string"/>
 
     <xs:element name="statistics">
         <xs:complexType>
