@@ -67,7 +67,6 @@
                         xmlHttp.onreadystatechange = function () {
                             if (this.readyState == 4 && this.status == 200) {
                                 createPlantTable(this, plantName);
-                                displayWappen(plantName);
                             }
                         };
                         xmlHttp.open("GET", "../database/database.xml", false);
@@ -123,15 +122,7 @@
                         document.getElementById("plantInformation").innerHTML = resultHtml;
                     }
 
-                    function displayWappen(plantName) {
-                        console.log("displayWappen-Funktion aufgerufen")
-                        var wappen = document.createElement('img');
-                        wappen.src = 'img/' + plantName + '.png';
-                        wappen.width = 500;
-                        wappen.height = 600;
-                        console.log(document.getElementById("plantInformation"))
-                        document.getElementById("plantInformation").appendChild(img);
-                    }
+
                     ]]>
                 </script>
             </body>
