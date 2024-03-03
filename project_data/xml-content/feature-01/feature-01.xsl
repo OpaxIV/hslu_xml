@@ -3,7 +3,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml">
     <xsl:output doctype-public="-//W3C//DTD XHTML 1.0 Strict//EN"
                 doctype-system="http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"/>
-    
+
     <xsl:template match="feature">
         <html>
             <head>
@@ -41,10 +41,12 @@
                                 <div class="w3-container">
                                     <label for="plant-input">Power plant</label>
                                     <select name="plant" id="plant-input" class="w3-input">
-                                        <xsl:apply-templates select="document('../database/database.xml')/energie-data/energie-plant/plant"/>
+                                        <xsl:apply-templates
+                                                select="document('../database/database.xml')/energie-data/energie-plant/plant"/>
                                     </select>
                                 </div>
                             </form>
+                            <br/>
                             <button type="button" class="w3-button w3-teal" onclick="loadPlant()">Submit</button>
                             <br/>
                             <br/>
@@ -53,12 +55,13 @@
                         <!-- Right half -->
                         <div class="w3-container w3-half">
                             <div style="width: 100%; height: 100%;">
-                                <img src="img/banner.png" alt="Banner Image" style="max-width: 100%; max-height: 100%;" />
+                                <img src="img/banner.png" alt="Banner Image"
+                                     style="max-width: 100%; max-height: 100%;"/>
                             </div>
                         </div>
                     </div>
                 </div>
-                
+
                 <script>
                     <![CDATA[
                     function loadPlant() {
@@ -121,14 +124,12 @@
 
                         document.getElementById("plantInformation").innerHTML = resultHtml;
                     }
-
-
                     ]]>
                 </script>
             </body>
         </html>
     </xsl:template>
-    
+
     <!-- Name of the power plant für Select-Optionen -->
     <xsl:template match="plant">
         <option>
@@ -138,6 +139,6 @@
             <xsl:value-of select="name"/>
         </option>
     </xsl:template>
-    
-    
+
+
 </xsl:stylesheet>
