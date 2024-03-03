@@ -53,7 +53,7 @@
                 </div>
                 <!-- Javascript-Functions for FO-Transformation -->
                 <!-- provide js functionality in browser -->
-                <script src="feature-03/fo-functions.js" type="text/javascript"></script>
+                <script src="preisdatenDrucken/fo-functions.js" type="text/javascript"></script>
                 
                 <small>
                     (Achtung: Das Drucken der Daten funktioniert nur im HSLU-Netzwerk, da Web-Service auf internen Servern gehostet ist)
