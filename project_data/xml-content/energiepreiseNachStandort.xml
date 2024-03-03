@@ -1,4 +1,4 @@
 <?xml version="1.0" ?>
-<?xml-stylesheet type="text/xsl" href="feature-01/feature-01.xsl"?>
+<?xml-stylesheet type="text/xsl" href="PreiseNachStandort/energiepreiseNachStandort.xsl"?>
 
 <feature></feature> <!-- "leeres" xml, auf das das xsl angewendet wird -->

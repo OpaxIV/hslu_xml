@@ -37,6 +37,7 @@
                         <!-- Left half -->
                         <div class="w3-third">
                             <h2>Für welches Energiewerk möchten Sie die Preise anzeigen lassen?</h2>
+                            <p>Dieses Feature ist vorerst nur in Chrome verfügbar</p>
                             <form class="w3-container">
                                 <div class="w3-container">
                                     <label for="plant-input">Power plant</label>
