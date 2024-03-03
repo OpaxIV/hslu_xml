@@ -29,8 +29,12 @@
                     </p>
 
                     <p>
-                        Author:
-                        <xsl:value-of select="author"/>
+                        Authors:
+                        <xsl:value-of select="authors"/>
+                    </p>
+                    <p>
+                        Dozent:
+                        <xsl:value-of select="tutor"/>
                     </p>
                 </div>
 
