@@ -12,11 +12,6 @@
         <index>1</index>
     </item>
     <item>
-        <text>Preisgraphik anzeigen</text>
-        <link>feature-02.xml</link>
-        <index>2</index>
-    </item>
-    <item>
         <text>Preisdaten drucken</text>
         <link>feature-03.xml</link>
         <index>3</index>
