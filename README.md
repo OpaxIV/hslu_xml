@@ -1,5 +1,18 @@
-# xml_project
-XML Project for the HSLU XML Blockweek
+# XML Blockwoche @ HSLU
 
-## Index
-Inhaltsverzeichnis hinzufügen
+Diese Git-Ablage beinhaltet unser Gruppenprojekt, welches im Rahmen der XML-Blockwoche an der HSLU kreiert wurde.
+Es beinhaltet den Code, wie auch das Factsheet als PDF
+
+## Authoren
+Céline Hamatschek<br>
+Soria Mhel Laurent<br>
+Fabio Schmidt<br>
+
+Basierend auf der Vorlage von Herrn Benjamin Bäni
+
+## Datum
+08.03.2024
+
+## Verzeichnisse
+- **/archive** - enthält die Vorlage sowie gegebenfalls ungebrauchte, archivierte Dateien
+- **/project_data** - enthält das Projekt
