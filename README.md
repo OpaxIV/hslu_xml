@@ -12,7 +12,3 @@ Basierend auf der Vorlage von Herrn Benjamin Bäni
 
 ## Datum
 08.03.2024
-
-## Verzeichnisse
-- **/archive** - enthält die Vorlage sowie gegebenfalls ungebrauchte, archivierte Dateien
-- **/project_data** - enthält das Projekt
